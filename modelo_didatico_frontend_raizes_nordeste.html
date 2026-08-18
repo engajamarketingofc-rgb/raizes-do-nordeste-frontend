@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raízes do Nordeste — Modelo didático de Front-end</title>
+<style>
+  :root{
+    --bg:#f7f1e6;
+    --surface:#fffaf2;
+    --text:#2d241f;
+    --muted:#74665d;
+    --brand:#b6492d;
+    --brand2:#d99a2b;
+    --green:#3f6f54;
+    --line:#eadfce;
+    --shadow:0 14px 40px rgba(55,38,24,.10);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:linear-gradient(180deg,#f8f3ea 0%,#f4ecdf 100%);
+    color:var(--text);
+  }
+  .study{
+    background:#2f2a26;color:#fff;text-align:center;padding:8px 16px;font-size:12px;letter-spacing:.04em
+  }
+  .shell{max-width:1180px;margin:auto;padding:18px 22px 60px}
+  header{
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:18px 0;
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:22px}
+  .logo{
+    width:44px;height:44px;border-radius:14px;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));
+    color:#fff;font-size:22px;box-shadow:var(--shadow)
+  }
+  nav{display:flex;gap:8px;flex-wrap:wrap}
+  nav button,.pill,.btn{
+    border:0;border-radius:999px;padding:11px 15px;font-weight:700;cursor:pointer
+  }
+  nav button{background:transparent;color:var(--muted)}
+  nav button.active{background:#fff;color:var(--text);box-shadow:0 8px 26px rgba(70,50,30,.08)}
+  .actions{display:flex;align-items:center;gap:10px}
+  .iconBtn{width:42px;height:42px;border:0;border-radius:50%;background:#fff;box-shadow:0 8px 26px rgba(70,50,30,.08);cursor:pointer}
+  .hero{
+    background:
+      radial-gradient(circle at 85% 20%, rgba(217,154,43,.35), transparent 28%),
+      linear-gradient(135deg,#6f2e20 0%,#a8492e 58%,#c16b35 100%);
+    color:#fff;border-radius:32px;padding:42px;
+    display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center;
+    box-shadow:var(--shadow);overflow:hidden
+  }
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;opacity:.82}
+  h1{font-size:clamp(38px,5vw,68px);line-height:.98;margin:10px 0 14px}
+  .hero p{max-width:650px;line-height:1.6;color:#fff3e7;margin:0 0 22px}
+  .heroActions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn.primary{background:#fff;color:#5d2a1e}
+  .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  .plate{
+    min-height:280px;display:grid;place-items:center;position:relative
+  }
+  .food{
+    width:260px;height:260px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, #ffd970 0 16%, #e3a63d 17% 29%, #fff1c9 30% 44%, #c76639 45% 55%, #f7e5bd 56% 67%, #7f4228 68% 72%, #f9efe0 73%);
+    border:16px solid rgba(255,255,255,.82);
+    box-shadow:0 28px 60px rgba(0,0,0,.24);
+    transform:rotate(-8deg)
+  }
+  .unitBar{
+    margin-top:22px;background:#fff;padding:16px 18px;border-radius:18px;display:flex;gap:16px;
+    justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(70,50,30,.06)
+  }
+  .unitBar strong{display:block}
+  .unitBar span{color:var(--muted);font-size:13px}
+  .unitSelect{background:var(--bg);padding:11px 14px;border-radius:12px;font-weight:750}
+  section{margin-top:36px}
+  .sectionHead{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:14px}
+  .sectionHead h2{margin:0;font-size:28px}
+  .sectionHead p{margin:6px 0 0;color:var(--muted)}
+  .categories{display:flex;gap:10px;overflow:auto;padding-bottom:6px}
+  .pill{background:#fff;color:var(--text);white-space:nowrap;border:1px solid var(--line)}
+  .pill.active{background:var(--green);color:#fff;border-color:transparent}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px;box-shadow:0 10px 28px rgba(70,50,30,.05)
+  }
+  .thumb{
+    height:160px;border-radius:16px;display:grid;place-items:center;font-size:64px;
+    background:linear-gradient(135deg,#f7d88b,#f0bb67)
+  }
+  .card h3{margin:14px 0 6px;font-size:18px}
+  .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.45;min-height:38px}
+  .priceRow{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .price{font-weight:900;font-size:19px}
+  .add{border:0;border-radius:12px;background:var(--brand);color:#fff;width:38px;height:38px;font-size:20px;cursor:pointer}
+  .miniTag{display:inline-flex;margin-top:10px;padding:6px 9px;border-radius:999px;background:#edf4ef;color:var(--green);font-size:11px;font-weight:800}
+  .twoCol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .loyalty,.status{
+    border-radius:26px;padding:26px;min-height:210px
+  }
+  .loyalty{background:linear-gradient(135deg,#254f3a,#47775b);color:#fff}
+  .status{background:#fff;border:1px solid var(--line)}
+  .points{font-size:42px;font-weight:900;margin:10px 0}
+  .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.2);overflow:hidden}
+  .progress span{display:block;height:100%;width:68%;background:#fff;border-radius:999px}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:24px}
+  .step{text-align:center;color:var(--muted);font-size:12px}
+  .dot{width:16px;height:16px;border-radius:50%;background:#ddd;margin:0 auto 8px}
+  .step.done .dot{background:var(--green)}
+  .step.current .dot{background:var(--brand2);box-shadow:0 0 0 5px rgba(217,154,43,.18)}
+  footer{margin-top:48px;color:var(--muted);font-size:12px;text-align:center}
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;padding:30px}
+    .plate{min-height:220px}.food{width:210px;height:210px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .twoCol{grid-template-columns:1fr}
+    nav{display:none}
+  }
+  @media (max-width:560px){
+    .shell{padding:14px 14px 40px}
+    header{align-items:flex-start}
+    .brand{font-size:18px}
+    .hero{border-radius:24px;padding:24px}
+    .grid{grid-template-columns:1fr}
+    .unitBar{align-items:flex-start;flex-direction:column}
+    .steps{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="study">MODELO DIDÁTICO DE REFERÊNCIA — NÃO UTILIZAR COMO ENTREGA FINAL</div>
+<div class="shell">
+<header>
+  <div class="brand"><div class="logo">RN</div> Raízes do Nordeste</div>
+  <nav>
+    <button class="active">Início</button>
+    <button>Cardápio</button>
+    <button>Pedidos</button>
+    <button>Fidelidade</button>
+  </nav>
+  <div class="actions">
+    <button class="iconBtn" title="Buscar">⌕</button>
+    <button class="iconBtn" title="Carrinho">🛒</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Sabor regional • experiência digital</div>
+      <h1>O Nordeste<br>mais perto de você.</h1>
+      <p>Um conceito de interface para pedidos antecipados, retirada rápida, acompanhamento do pedido e fidelização, adaptado à disponibilidade de cada unidade.</p>
+      <div class="heroActions">
+        <button class="btn primary" onclick="document.querySelector('#menu').scrollIntoView({behavior:'smooth'})">Ver cardápio</button>
+        <button class="btn secondary">Acompanhar pedido</button>
+      </div>
+    </div>
+    <div class="plate"><div class="food" aria-label="Ilustração abstrata de prato regional"></div></div>
+  </section>
+
+  <div class="unitBar">
+    <div>
+      <strong>Unidade selecionada</strong>
+      <span>Os itens exibidos podem variar conforme estoque, região e sazonalidade.</span>
+    </div>
+    <div class="unitSelect">📍 Recife • Boa Vista ▾</div>
+  </div>
+
+  <section id="menu">
+    <div class="sectionHead">
+      <div>
+        <h2>Cardápio da unidade</h2>
+        <p>Produtos organizados por categoria, com disponibilidade local.</p>
+      </div>
+    </div>
+
+    <div class="categories">
+      <button class="pill active">Destaques</button>
+      <button class="pill">Cuscuz</button>
+      <button class="pill">Tapiocas</button>
+      <button class="pill">Bolos</button>
+      <button class="pill">Bebidas</button>
+      <button class="pill">Café da manhã</button>
+    </div>
+
+    <div class="grid" style="margin-top:16px">
+      <article class="card">
+        <div class="thumb">🌽</div>
+        <span class="miniTag">Disponível</span>
+        <h3>Cuscuz da Casa</h3>
+        <p>Cuscuz com queijo coalho, manteiga de garrafa e opção de complemento.</p>
+        <div class="priceRow"><span class="price">R$ 18,90</span><button class="add">+</button></div>
+      </article>
+      <article class="card">
+        <div class="thumb">🥞</div>
+        <span class="miniTag">Mais pedido</span>
+        <h3>Tapioca Sertaneja</h3>
+        <p>Tapioca recheada com carne de sol desfiada e queijo coalho.</p>
+        <div class="priceRow"><span class="price">R$ 22,90</span><button class="add">+</button></div>
+      </article>
+      <article class="card">
+        <div class="thumb">🍰</div>
+        <span class="miniTag">Sazonal</span>
+        <h3>Bolo de Macaxeira</h3>
+        <p>Fatia artesanal preparada com receita tradicional da rede.</p>
+        <div class="priceRow"><span class="price">R$ 9,90</span><button class="add">+</button></div>
+      </article>
+      <article class="card">
+        <div class="thumb">🥤</div>
+        <span class="miniTag">Disponível</span>
+        <h3>Suco Regional</h3>
+        <p>Escolha entre sabores disponíveis na unidade selecionada.</p>
+        <div class="priceRow"><span class="price">R$ 8,90</span><button class="add">+</button></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="twoCol">
+    <div class="loyalty">
+      <div class="eyebrow">Programa de fidelidade</div>
+      <h2 style="margin:8px 0 0">Seu saldo</h2>
+      <div class="points">680 pts</div>
+      <p style="color:#dfeee4;margin-top:0">Faltam 320 pontos para liberar a próxima vantagem.</p>
+      <div class="progress"><span></span></div>
+    </div>
+
+    <div class="status">
+      <div class="eyebrow" style="color:var(--brand)">Pedido #RN2048</div>
+      <h2 style="margin:8px 0">Acompanhe em tempo real</h2>
+      <p style="color:var(--muted)">Exemplo de feedback visual para reduzir ansiedade e deixar o status transparente.</p>
+      <div class="steps">
+        <div class="step done"><div class="dot"></div>Confirmado</div>
+        <div class="step done"><div class="dot"></div>Preparando</div>
+        <div class="step current"><div class="dot"></div>Pronto</div>
+        <div class="step"><div class="dot"></div>Retirado</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Protótipo didático estático para estudo de organização visual, responsividade e hierarquia de informação.
+</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.pill').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
